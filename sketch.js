@@ -1,68 +1,1 @@
-function  setup(){
-  createCanvas(1500,1000);
-  background(80, 180, 205);
-
-}
-function draw(){
-  cloud(100,200,70,100,PI,PI);
-  cloud(150,200,70,180,PI,PI);
-  cloud(200,200,80,150,PI,PI);
-  cloud(250,200,120,100,PI,PI);
-  cloud(400,150,70,100,PI,PI);
-  cloud(450,150,70,180,PI,PI);
-  cloud(500,150,80,150,PI,PI);
-  hat(480,330,600,275,720,330);
-  head_torso_mouth(600,580,400,500);
-  head_torso_mouth(600,700,100,50);
-  eye(520,480,80,40);
-  eye(660,480,80,40);
-  pupil(660,480,20,20);
-  pupil(520,480,20,20);
-  arm(400,580,330,630);
-  arm(330,630,300,620);
-  arm(330,630,300,640);
-  arm(330,630,300,660);
-  arm(800,580,870,630);
-  arm(870,630,900,620);
-  arm(870,630,900,640);
-  arm(870,630,900,660);
-}
-function cloud(a,b,c,d,e,f){
-  noStroke();
-  fill(255);
-  arc(a,b,c,d,e,f);
-} 
-function hat(a,b,c,d,e,f){
-  if (keyIsPressed === true){
-    noStroke();
-    fill(random(255),random(255),random(255));
-    triangle(a,b,c,d,e,f);
-  } 
-  }
-function head_torso_mouth(a,b,c,d){
-  
-  if (keyIsPressed === true){
-    ellipse(a,b,c,d);
-    fill(random(255),random(255),random(255));
-  } 
-}
-function pupil(a,b,c,d){
-  fill(0);
-  ellipse(a,b,c,d);
-}
-function eye(a,b,c,d){
-  stroke(0);
-  if (mouseIsPressed)
-    fill(0);
-  else
-    fill(255);
-  ellipse(a,b,c,d);
-} 
-function arm(a,b,c,d){
-  fill(0);
-  line(a,b,c,d);
-}
-
-
-
-
+var bx,by;var prx,pry; var plx,ply; var x=5;var y=15;var bounces;var osc;var offpaddle;function setup() {  createCanvas(800,500);  stroke(255);    ply = 200;  plx = 0;   prx = 770;  pry = 200;  bx = width/2;   by = height/2;  bounces=0;  osc = new p5.Noise('brown');   osc.amp(0);  osc.start();  offpaddle= true;  }function draw(){  background(0);  line(370,0,370,500);  r_paddle(prx,pry,30,100);  l_paddle(plx,ply,30,100);  ball(bx,by,30,30);  moveBall();  movePaddle();   textSize(20);  text("Bounces: "+ bounces, 40,50);  text("Ball position: " + "("+Math.round(bx  ) +  " ,  "  +Math.round(by) + ")", 550,50);   }function r_paddle(a,b,c,d){  fill(255,0,0);  rect(a,b,c,d);}function l_paddle(a,b,c,d){  fill(0,0,255);  rect(a,b,c,d); }function ball(a,b,c,d){  fill(255);  ellipse(a,b,c,d);}function moveBall(){  if (offpaddle)  {  bx += x;      if ( bx > prx-20 || bx <plx+50){    x = -x;  }        }  else{         bx=385;      by +=y;      if(by>500 || by<=0)      {        y=-y;      }      stroke(255,0,0);      textSize(32);      text("GAME OVER",270,250);      osc.amp(0.5, 0.05);      }  if (bx == plx+50 || bx == prx-20){    if (by >= ply && by <= ply+100 ){      by = random(ply,300);            bounces+=1;    }else{      offpaddle=false;          }  }  }  function movePaddle(){  if (keyIsDown(UP_ARROW) && pry > 0 )     pry -=2;  if (keyIsDown(UP_ARROW) && ply > 0)    ply -=2;  if (keyIsDown(DOWN_ARROW) && pry < 400 )    pry +=2;   if (keyIsDown(DOWN_ARROW) &&  ply < 400)    ply +=2;}
